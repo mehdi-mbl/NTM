@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="NTM" target="1.5" />
+      <module name="NTM" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,10 +1,11 @@
 package uia.ntm;
 
-import uia.ntm.control.FeedForwardController;
-import uia.ntm.learn.IWeightUpdater;
-import uia.ntm.memory.address.Head;
-import uia.ntm.memory.MemoryState;
-import uia.ntm.memory.NTMMemory;
+import uia.activation.ActivationFunction;
+import uia.learn.interfaces.IWeightUpdater;
+import uia.memory.MemoryState;
+import uia.memory.NTMMemory;
+import uia.memory.address.Head;
+import uia.control.FeedForwardController;
 
 public class NeuralTuringMachine implements INeuralTuringMachine
 {
@@ -25,9 +26,9 @@ public class NeuralTuringMachine implements INeuralTuringMachine
         prevInput = null;
     }
 
-    public NeuralTuringMachine(int inputSize, int outputSize, int controllerSize, int headCount, int memoryHeight, int memoryWidth, IWeightUpdater initializer) {
-        memory = new NTMMemory(memoryHeight,memoryWidth,headCount);
-        control = new FeedForwardController(controllerSize,inputSize,outputSize,headCount,memoryWidth);
+    public NeuralTuringMachine(int inputSize, int outputSize, int controllerSize, int headCount, int memoryHeight, int memoryWidth, IWeightUpdater initializer, ActivationFunction activationFunction) {
+        memory = new NTMMemory(memoryHeight,memoryWidth,headCount, activationFunction);
+        control = new FeedForwardController(controllerSize,inputSize,outputSize,headCount,memoryWidth, activationFunction);
         now = prev = null;
         prevInput = null;
         updateWeights(initializer);
@@ -45,7 +46,7 @@ public class NeuralTuringMachine implements INeuralTuringMachine
 
         prev = now;
         control.process(input, prev.read);
-        now = prev.process(getHeads());
+        now = prev.process(getHeads(), memory.getActivationFunction());
     }
 
     @Override
