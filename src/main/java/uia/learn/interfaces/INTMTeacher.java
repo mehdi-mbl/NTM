@@ -14,13 +14,13 @@ public interface INTMTeacher {
 
     }
 
-    default public NeuralTuringMachine[] train(double[][] input, double[][] knownOutput) {
+    default NeuralTuringMachine[] train(double[][] input, double[][] knownOutput) {
         return trainInternal(input, knownOutput);
     }
 
-    public NeuralTuringMachine[] trainInternal(double[][] input, double[][] knownOutput);
+    NeuralTuringMachine[] trainInternal(double[][] input, double[][] knownOutput);
 
-    public static List<double[]> getMachineOutputs(NeuralTuringMachine[] machines) {
+    static List<double[]> getMachineOutputs(NeuralTuringMachine[] machines) {
         List<double[]> realOutputs = new ArrayList<>(machines.length);
         for (NeuralTuringMachine machine : machines) {
             realOutputs.add(machine.getOutput());

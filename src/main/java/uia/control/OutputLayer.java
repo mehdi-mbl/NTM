@@ -49,11 +49,12 @@ public class OutputLayer {
         this.activationFunction=activationFunction;
     }
 
-    public void forwardPropagation(HiddenLayer hiddenLayer) {
+    public void forwardPropagation(HiddenLayer hiddenLayer) throws NullPointerException {
 
         final double hiddenLayerNeurons[] = hiddenLayer.neurons.value;
 
         final double[] out = outputs.value;
+
 
         for (int i = 0; i < _outputSize; i++) {
             //Foreach neuron in classic output layer

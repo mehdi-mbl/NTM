@@ -24,10 +24,10 @@ public class NeuralTuringMachineTest {
         4th parameter: number of heads you want to have.
         5th parameter: The number of nodes in the hidden layer of the controller
         6th parameter: The training data. I have some examples. You can generate your own data.
-            To do that create a class tha implements SequenceGenerator.java
+            To do that create a class that implements SequenceGenerator.java
             interface and implement the generateSequence function. There you can generate any random
             data or import data from a file.
-        7th parameter: Select the activation function. I have only implemented a sigmoid activation which work jus fine.
+        7th parameter: Select the activation function. I have only implemented a sigmoid activation which works just fine.
             But you can implement your own as long as it implements ActivationFunction.java interface.
         8th parameter: Set the error bellow which the learning process stops.
          */
@@ -56,18 +56,26 @@ public class NeuralTuringMachineTest {
 
         // First train the NTM
        sequenceLearner.runNTM(false);
-       NeuralTuringMachine ntm= sequenceLearner.machine;
+       NeuralTuringMachine ntm = new NeuralTuringMachine(sequenceLearner.machine);
 
        // Get your test data. Same here as explained in 6th parameter
         XORSequenceGenerator test= new XORSequenceGenerator();
         test.generateSequence(1,8);
 
+        System.out.println("NTM Test");
         // Get your output
+        System.out.println("input= "+ Arrays.toString(test.getInput()[0]));
        ntm.process(test.getInput()[0]);
        double[] output =ntm.getOutput();
 
+       //Round up output elements
+        for (int i=0; i <output.length;i++) {
+            output[i]=(double) Math.round(output[i]*100)/100;
+        }
+
        //Print output
-       System.out.println(Arrays.toString(output));
+       System.out.println("Output "+Arrays.toString(output));
+        System.out.println("Ideal "+Arrays.toString(test.getOutput()[0]));
 
     }
 }
